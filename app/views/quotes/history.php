@@ -73,7 +73,7 @@ $quotes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <article class="card mb-4 shadow-sm border-0">
                     <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center flex-wrap gap-2">
                         <div>
-                            <span class="text-white-50 small">CÃ³digo</span><br>
+                            <span class="text-white-50 small">Código</span><br>
                             <strong><?= htmlspecialchars($quote['codigo']); ?></strong>
                         </div>
                         <div class="d-flex align-items-center gap-2 flex-wrap">
@@ -95,8 +95,8 @@ $quotes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <div class="col-md-4">
                                 <div class="border rounded p-3 h-100 bg-light-subtle">
                                     <h2 class="h6 text-primary">Fechas</h2>
-                                    <p class="mb-1"><strong>GeneraciÃ³n:</strong> <?= htmlspecialchars($quote['fecha_generacion']); ?></p>
-                                    <p class="mb-0"><strong>VÃ¡lida hasta:</strong> <?= htmlspecialchars($quote['fecha_validez']); ?></p>
+                                    <p class="mb-1"><strong>Generación:</strong> <?= htmlspecialchars($quote['fecha_generacion']); ?></p>
+                                    <p class="mb-0"><strong>Válida hasta:</strong> <?= htmlspecialchars($quote['fecha_validez']); ?></p>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -104,7 +104,7 @@ $quotes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <h2 class="h6 text-primary">Resumen</h2>
                                     <p class="mb-1"><strong>Total:</strong> $<?= number_format((float) $quote['total'], 2); ?></p>
                                     <p class="mb-1"><strong>IVA:</strong> $<?= number_format((float) $quote['iva'], 2); ?></p>
-                                    <p class="mb-0"><strong>TelÃ©fono:</strong> <?= htmlspecialchars($quote['cliente_telefono']); ?></p>
+                                    <p class="mb-0"><strong>Telefono:</strong> <?= htmlspecialchars($quote['cliente_telefono']); ?></p>
                                 </div>
                             </div>
                         </div>
