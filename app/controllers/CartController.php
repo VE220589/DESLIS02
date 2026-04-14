@@ -25,7 +25,7 @@ class CartController
 
             $id = (int) ($_POST['id'] ?? 0);
             if ($id <= 0) {
-                throw new Exception("ID de servicio invÃ¡lido.");
+                throw new Exception("ID de servicio inválido.");
             }
 
             $service = Service::getById($id);
@@ -184,7 +184,7 @@ class CartController
     private function ensureAuthenticated(): void
     {
         if (!isset($_SESSION['user_id'])) {
-            throw new Exception("Debes iniciar sesiÃ³n para gestionar el carrito.");
+            throw new Exception("Debes iniciar sesión para gestionar el carrito.");
         }
     }
 

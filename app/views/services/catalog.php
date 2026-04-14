@@ -114,7 +114,7 @@ $isAdmin = $userRol === 'admin';
                 <div class="col-lg-4">
                     <aside class="card shadow-sm border-0 sticky-top" style="top: 20px;">
                         <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                            <span>Mi CotizaciÃ³n</span>
+                            <span>Mi Cotización</span>
                             <span class="badge bg-warning text-dark" id="cart-count">0</span>
                         </div>
                         <div class="card-body">
@@ -229,7 +229,7 @@ $isAdmin = $userRol === 'admin';
                                 <small class="text-danger d-none" data-error-for="service-nombre"></small>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">DescripciÃ³n</label>
+                                <label class="form-label">Descripción</label>
                                 <textarea class="form-control" name="descripcion" id="service-descripcion" rows="3"
                                     required></textarea>
                                 <small class="text-danger d-none" data-error-for="service-descripcion"></small>

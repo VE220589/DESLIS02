@@ -1,5 +1,6 @@
-
-
+<?php
+$isLoggedIn = isset($_SESSION['user_id']);
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -25,9 +26,18 @@
                 <a href="index.php?page=services" class="btn btn-primary btn-lg">
                     Explorar Servicios
                 </a>
-                <a href="index.php?page=register" class="btn btn-outline-primary btn-lg">
-                    Crear Cuenta
-                </a>
+                <?php if ($isLoggedIn): ?>
+                    <a href="index.php?page=quotes" class="btn btn-outline-dark btn-lg">
+                        Ver Cotizaciones
+                    </a>
+                <?php else: ?>
+                    <a href="index.php?page=login" class="btn btn-dark btn-lg">
+                        Iniciar Sesión
+                    </a>
+                    <a href="index.php?page=register" class="btn btn-outline-primary btn-lg">
+                        Crear Cuenta
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
     </section>

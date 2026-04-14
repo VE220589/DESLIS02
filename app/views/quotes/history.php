@@ -52,7 +52,7 @@ $quotes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <p class="text-muted mb-0">
                     <?= $userRol === 'admin'
                         ? 'Visualizas todas las cotizaciones registradas en el sistema.'
-                        : 'AquÃ­ puedes revisar las cotizaciones generadas con tu cuenta.'; ?>
+                        : 'Aqui puedes revisar las cotizaciones generadas con tu cuenta.'; ?>
                 </p>
             </div>
         </div>

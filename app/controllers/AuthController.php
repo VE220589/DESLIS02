@@ -69,7 +69,7 @@ class AuthController {
 
         try {
             if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-                throw new Exception("MÃ©todo no permitido.");
+                throw new Exception("Metodo no permitido.");
             }
 
             $nombre = trim(strip_tags($_POST['nombre'] ?? ''));
