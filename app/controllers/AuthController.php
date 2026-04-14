@@ -62,6 +62,53 @@ class AuthController {
     }
 
     /**
+     * Procesa el registro de nuevos usuarios.
+     */
+    public function register() {
+        header('Content-Type: application/json');
+
+        try {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                throw new Exception("MÃ©todo no permitido.");
+            }
+
+            $nombre = trim(strip_tags($_POST['nombre'] ?? ''));
+            $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
+            $password = trim($_POST['password'] ?? '');
+            $confirmPassword = trim($_POST['confirm_password'] ?? '');
+
+            if ($nombre === '' || $email === '' || $password === '' || $confirmPassword === '') {
+                throw new Exception("Todos los campos son obligatorios.");
+            }
+
+            if ($password !== $confirmPassword) {
+                throw new Exception("Las contraseÃ±as no coinciden.");
+            }
+
+            $user = User::create([
+                'nombre' => $nombre,
+                'email' => $email,
+                'password' => $password,
+            ]);
+
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_nombre'] = $user['nombre'];
+            $_SESSION['user_rol'] = $user['rol'];
+
+            echo json_encode([
+                'success' => true,
+                'message' => 'Cuenta creada correctamente.',
+            ]);
+
+        } catch (Exception $e) {
+            echo json_encode([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
      * Cierra la sesión del usuario vía AJAX
      */
     public function logout() {

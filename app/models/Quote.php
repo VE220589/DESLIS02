@@ -119,7 +119,7 @@ class Quote
     /**
      * Genera un código único basado en el año actual y la cantidad de registros en la BD.
      */
-    private function generarCodigoDB(): string
+    public static function generarCodigo(): string
     {
         $db = Database::connect();
         $anio = date('Y');
@@ -144,7 +144,7 @@ class Quote
         $this->calcularTotal();
 
         // Generamos el código conectando a la base de datos
-        $this->codigo = $this->generarCodigoDB();
+        $this->codigo = self::generarCodigo();
 
         $this->fechaGeneracion = date('Y-m-d');
         $this->fechaValidez = date('Y-m-d', strtotime('+7 days'));

@@ -21,9 +21,14 @@
                 automatizada de cotizaciones para servicios tecnológicos.
             </p>
 
-            <a href="index.php?page=services" class="btn btn-primary btn-lg mt-3">
-                Explorar Servicios
-            </a>
+            <div class="d-flex gap-2 justify-content-center flex-wrap mt-3">
+                <a href="index.php?page=services" class="btn btn-primary btn-lg">
+                    Explorar Servicios
+                </a>
+                <a href="index.php?page=register" class="btn btn-outline-primary btn-lg">
+                    Crear Cuenta
+                </a>
+            </div>
         </div>
     </section>
 

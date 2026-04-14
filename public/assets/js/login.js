@@ -1,58 +1,73 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = document.getElementById("login-form");
-    const loginAlert = document.getElementById("login-alert");
-    const btnLogin = document.getElementById("btn-login");
+  const loginForm = document.getElementById("login-form");
+  const loginAlert = document.getElementById("login-alert");
+  const btnLogin = document.getElementById("btn-login");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
 
-    loginForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
+  function showAlert(type, message) {
+    loginAlert.textContent = message;
+    loginAlert.className = `alert alert-${type}`;
+  }
 
-        // Limpiamos alertas previas
-        loginAlert.classList.add("d-none");
-        loginAlert.classList.remove("alert-danger", "alert-success");
+  function validateEmail() {
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim());
+    emailInput.classList.toggle("is-invalid", !isValid && emailInput.value !== "");
+    emailInput.classList.toggle("is-valid", isValid);
+    return isValid;
+  }
 
-        // Cambiamos el estado del botón para indicar carga
-        const originalText = btnLogin.innerHTML;
-        btnLogin.innerHTML = "Verificando...";
-        btnLogin.disabled = true;
+  function validatePassword() {
+    const isValid = passwordInput.value.trim().length >= 8;
+    passwordInput.classList.toggle(
+      "is-invalid",
+      !isValid && passwordInput.value !== ""
+    );
+    passwordInput.classList.toggle("is-valid", isValid);
+    return isValid;
+  }
 
-        const formData = new FormData(loginForm);
+  emailInput.addEventListener("input", validateEmail);
+  passwordInput.addEventListener("input", validatePassword);
 
-        try {
-            // Enviamos la petición AJAX al Enrutador apuntando a la acción 'login'
-            const response = await fetch("index.php?action=login", {
-                method: "POST",
-                body: formData
-            });
+  loginForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-            const data = await response.json();
+    loginAlert.className = "alert d-none";
 
-            if (data.success) {
-                // Mostramos éxito
-                loginAlert.textContent = "¡Acceso concedido! Redirigiendo...";
-                loginAlert.classList.add("alert-success");
-                loginAlert.classList.remove("d-none");
+    const isValid = validateEmail() && validatePassword();
+    if (!isValid) {
+      showAlert(
+        "danger",
+        "Ingresa un correo v\u00e1lido y una contrase\u00f1a de al menos 8 caracteres."
+      );
+      return;
+    }
 
-                // Esperamos 1 segundo y redirigimos al catálogo
-                setTimeout(() => {
-                    window.location.href = "index.php?page=services";
-                }, 1000);
-                
-            } else {
-                // Mostramos el error devuelto por el controlador
-                loginAlert.textContent = data.message;
-                loginAlert.classList.add("alert-danger");
-                loginAlert.classList.remove("d-none");
-                
-                // Restauramos el botón
-                btnLogin.innerHTML = originalText;
-                btnLogin.disabled = false;
-            }
-        } catch (error) {
-            loginAlert.textContent = "Error de conexión con el servidor.";
-            loginAlert.classList.add("alert-danger");
-            loginAlert.classList.remove("d-none");
-            btnLogin.innerHTML = originalText;
-            btnLogin.disabled = false;
-        }
-    });
+    const originalText = btnLogin.textContent;
+    btnLogin.textContent = "Verificando...";
+    btnLogin.disabled = true;
+
+    try {
+      const response = await fetch("index.php?action=login", {
+        method: "POST",
+        body: new FormData(loginForm),
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.message || "Credenciales incorrectas.");
+      }
+
+      showAlert("success", "\u00a1Acceso concedido! Redirigiendo...");
+      setTimeout(() => {
+        window.location.href = "index.php?page=services";
+      }, 900);
+    } catch (error) {
+      showAlert("danger", error.message || "Error de conexi\u00f3n con el servidor.");
+      btnLogin.textContent = originalText;
+      btnLogin.disabled = false;
+    }
+  });
 });

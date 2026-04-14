@@ -50,6 +50,10 @@ if (isset($_SESSION['user_id'])) {
                     </form>
 
                     <div class="text-center mt-4">
+                        <p class="mb-2 text-muted">
+                            ¿Aun no tienes cuenta?
+                            <a href="index.php?page=register" class="text-decoration-none">Regístrate aquí</a>
+                        </p>
                         <a href="index.php?page=home" class="text-decoration-none text-muted">Volver a la página
                             principal</a>
                     </div>

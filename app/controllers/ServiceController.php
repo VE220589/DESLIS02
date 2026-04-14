@@ -16,8 +16,13 @@ class ServiceController {
      */
     private function checkAdmin() {
         if (!isset($_SESSION['user_rol']) || $_SESSION['user_rol'] !== 'admin') {
+            http_response_code(403);
             header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'message' => 'Acceso denegado. Permisos de administrador requeridos.']);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Acceso denegado. Esta acción solo está disponible para administradores.',
+                'redirect' => 'index.php?page=forbidden'
+            ]);
             exit; // Detiene la ejecución si no es admin
         }
     }
@@ -38,10 +43,10 @@ class ServiceController {
             // Esto es genial porque aprovecha todas tus validaciones originales
             $service = new Service(
                 0, 
-                $_POST['nombre'] ?? '',
-                $_POST['descripcion'] ?? '',
+                trim(strip_tags($_POST['nombre'] ?? '')),
+                trim(strip_tags($_POST['descripcion'] ?? '')),
                 (float) ($_POST['precio'] ?? 0),
-                $_POST['categoria'] ?? ''
+                trim($_POST['categoria'] ?? '')
             );
             
             if ($service->save()) {

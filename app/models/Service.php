@@ -59,8 +59,8 @@ class Service
 
     private function validarId(int $id): void
     {
-        if ($id <= 0) {
-            throw new InvalidArgumentException("El ID del servicio debe ser mayor que 0.");
+        if ($id < 0) {
+            throw new InvalidArgumentException("El ID del servicio no puede ser negativo.");
         }
     }
 
@@ -106,7 +106,7 @@ class Service
 
     private function validarCategoria(string $categoria): void
     {
-        if (!in_array($categoria, self::CATEGORIAS_VALIDAS)) {
+        if (!in_array(trim($categoria), self::CATEGORIAS_VALIDAS, true)) {
             throw new InvalidArgumentException("Categoría no válida para el servicio.");
         }
     }

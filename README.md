@@ -1,136 +1,117 @@
-# Sistema Web de Cotización de Servicios
+# Sistema Web de Cotizacion de Servicios
 
-Sistema web desarrollado en **PHP + JavaScript + AJAX** que permite generar cotizaciones de servicios de forma dinámica, aplicando descuentos, impuestos y persistencia de datos sin base de datos (uso de sesiones y JSON).
+Aplicacion web desarrollada con `PHP`, `MySQL`, `JavaScript` puro, `AJAX` y una organizacion tipo `MVC` para gestionar un catalogo de servicios, carrito dinamico, autenticacion por roles y generacion de cotizaciones.
 
----
+## Funcionalidades incluidas
 
-## Características Principales
+- Catalogo con 12+ servicios organizados en 3 categorias.
+- Registro e inicio de sesion con sesiones PHP.
+- Roles `admin` y `cliente`.
+- Carrito dinamico con `AJAX`, cantidades minimas y maximas, contador de items y vaciado completo.
+- Calculos automaticos de subtotal, descuento, IVA y total.
+- Generacion de cotizaciones con codigo `COT-YYYY-####`.
+- Historial de cotizaciones con vista responsive.
+- Gestion de servicios para administrador.
+- Peticiones AJAX centralizadas en `public/index.php` y resueltas por controladores.
 
-- Catálogo de servicios organizado por categorías
-- Carrito de compras dinámico
-- Modificación de cantidades (mín. 1 – máx. 10)
-- Cálculo automático de:
-  - Subtotal
-  - Descuento por cantidad
-  - IVA (13%)
-  - Total final
-- Generación de cotizaciones con código único
-- Historial de cotizaciones persistente (JSON)
-- Validación dual (Frontend y Backend)
-- Uso de Bootstrap para diseño responsivo
+## Requisitos
 
----
+- XAMPP con Apache y MySQL activos.
+- PHP 8.3+
+- MySQL / MariaDB
 
-## Tecnologías Utilizadas
+## Instalacion
 
-- PHP 8+
-- JavaScript (JS puro)
-- AJAX (fetch)
-- Bootstrap 5
-- JSON (persistencia)
-- Sesiones PHP
+1. Copia el proyecto en:
+   `C:\xampp\htdocs\DESLIS02`
+2. Importa el archivo [bd.sql](/C:/xampp/htdocs/DESLIS02/bd.sql:1) en MySQL.
+3. Verifica que la base de datos creada sea `cotizador_mvc`.
+4. Inicia Apache y MySQL desde XAMPP.
+5. Abre el sistema en:
+   `http://localhost/DESLIS02/`
 
----
+## Credenciales de prueba
 
-## Estructura del Proyecto
+- Administrador
+  `admin@admin.com`
+  `password123`
+- Cliente
+  `cliente@cliente.com`
+  `password123`
 
-DESLIS01
-├── api/
-│ ├── add-to-cart.php
-│ ├── update-cart.php
-│ ├── remove-item.php
-│ ├── remove-from-cart.php
-│ ├── get-cart.php
-│ └── process-quote.php
-│
-├── classes/
-│ ├── Service.class.php
-│ └── Quote.class.php
-│
-├── pages/
-│ ├── services-catalog.php
-│ └── view-quotes.php
-│
-├── assets/
-│ ├── js/
-│ │ └── services-catalog.js
-│ └── css/
-│
-├── data/
-│ └── quotes.json
-│
-├── index.php
-└── README.md
+Tambien puedes crear nuevas cuentas desde:
+`http://localhost/DESLIS02/public/index.php?page=register`
 
----
+## Estructura principal
 
-## Instalación
+```text
+DESLIS02/
+|-- app/
+|   |-- config/
+|   |   `-- database.php
+|   |-- controllers/
+|   |   |-- AuthController.php
+|   |   |-- CartController.php
+|   |   |-- QuoteController.php
+|   |   `-- ServiceController.php
+|   |-- models/
+|   |   |-- Quote.php
+|   |   |-- QuoteDetail.php
+|   |   |-- Service.php
+|   |   `-- User.php
+|   `-- views/
+|       |-- auth/
+|       |   |-- login.php
+|       |   `-- register.php
+|       |-- quotes/
+|       |   `-- history.php
+|       |-- services/
+|       |   `-- catalog.php
+|       `-- home.php
+|-- public/
+|   |-- assets/
+|   |   |-- css/
+|   |   |   `-- services-catalog.css
+|   |   `-- js/
+|   |       |-- login.js
+|   |       |-- register.js
+|   |       `-- services-catalog.js
+|   |-- fix_passwords.php
+|   |-- index.php
+|   `-- test_db.php
+|-- bd.sql
+`-- README.md
+```
 
-1. Copiar el proyecto en el directorio de Apache (XAMPP):
-   C:\xampp\htdocs\DESLIS01
+## Rutas principales
 
-> Importante: La carpeta `data` es obligatoria para guardar las cotizaciones.
+- Inicio: `http://localhost/DESLIS02/`
+- Catalogo: `http://localhost/DESLIS02/public/index.php?page=services`
+- Login: `http://localhost/DESLIS02/public/index.php?page=login`
+- Registro: `http://localhost/DESLIS02/public/index.php?page=register`
+- Cotizaciones: `http://localhost/DESLIS02/public/index.php?page=quotes`
 
-2. Iniciar Apache desde XAMPP.
+## Endpoints AJAX
 
-3. Acceder desde el navegador:
-   http://localhost/DESLIS01
+- `public/index.php?action=login`
+- `public/index.php?action=register`
+- `public/index.php?action=add_to_cart`
+- `public/index.php?action=get_cart`
+- `public/index.php?action=update_cart`
+- `public/index.php?action=remove_from_cart`
+- `public/index.php?action=generate_quote`
+- `public/index.php?action=create_service`
+- `public/index.php?action=delete_service`
 
----
+## Documento de servicios
 
-## Uso del Sistema
+La lista base de servicios con nombre, descripcion, precio y categoria se encuentra en:
 
-1. Ingresar al sistema desde `index.php`
-2. Entrar al **Catálogo de Servicios**
-3. Agregar servicios al carrito
-4. Modificar cantidades con botones **+ / -**
-5. Presionar **Generar Cotización**
-6. Completar datos del cliente en el modal
-7. Confirmar cotización
-8. Consultar el historial en **Ver Cotizaciones**
+- [docs/servicios.csv](/C:/xampp/htdocs/DESLIS02/docs/servicios.csv:1)
 
----
+## Notas
 
-## Reglas de Negocio
-
-### Descuento por Cantidad (Opción B)
-
-- 3 a 5 unidades → 8%
-- 6 a 9 unidades → 12%
-- 10 o más unidades → 18%
-
-### Validaciones
-
-- Carrito no puede estar vacío
-- Subtotal mínimo: $100
-- Cantidad por servicio: mínimo 1, máximo 10
-- Todos los datos del cliente son obligatorios
-- Email con formato válido
-
----
-
-## Persistencia de Datos
-
-- El carrito se maneja con **sesiones PHP**
-- Las cotizaciones se almacenan en:
-  data/quotes.json
-
-No se utiliza base de datos.
-
----
-
-## Notas Importantes
-
-- El sistema valida tanto en frontend como en backend
-- El backend siempre controla los límites de cantidad
-- El historial de cotizaciones se conserva aunque se cierre el navegador
-
----
-
-## Desarrolladores:
-
-Desafío realizado por:
-Oscar Alejandro Villalobos Eguizábal VE220589
-William Antonio Ramos Rodríguez RR210930
-
----
+- Si las credenciales de prueba no funcionan despues de importar la base, ejecuta:
+  `http://localhost/DESLIS02/public/fix_passwords.php`
+- La aplicacion guarda usuarios, servicios y cotizaciones en MySQL.
+- El carrito se mantiene en sesion PHP.
